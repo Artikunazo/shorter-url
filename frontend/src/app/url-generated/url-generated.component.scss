@@ -1,0 +1,25 @@
+.url-generated-container {
+	min-width: fit-content;
+	margin-top: 25px;
+
+	.url-generated-content {
+		display: flex;
+
+		p {
+			background-color: lightgray;
+			padding: 10px;
+			border-radius: 5px;
+		}
+
+		mat-divider {
+			margin: 0 10px;
+		}
+
+		mat-icon {
+			padding-left: 10px;
+			font-size: 20px;
+			display: flex;
+			align-self: center;
+		}
+	}
+}

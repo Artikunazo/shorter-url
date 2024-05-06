@@ -1,0 +1,16 @@
+<section>
+	<form [formGroup]="formUrl" class="row">
+		<mat-form-field class="col" appareance="outline">
+			<mat-label>Url to short</mat-label>
+			<input matInput formControlName="url" type="text" />
+		</mat-form-field>
+		<button
+			mat-raised-button
+			color="primary"
+			(click)="shortUrl()"
+			class="col justify-self-center"
+		>
+			Short URL!
+		</button>
+	</form>
+</section>
