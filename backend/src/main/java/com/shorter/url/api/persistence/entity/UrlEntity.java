@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 
 import java.sql.Timestamp;
 
-public class Url {
+public class UrlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

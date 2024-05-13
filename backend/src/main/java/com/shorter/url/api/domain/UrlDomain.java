@@ -1,6 +1,6 @@
 package com.shorter.url.api.domain;
 
-public class Url {
+public class UrlDomain {
     private String urlId;
     private String shortedUrl;
     private String originalUrl;
