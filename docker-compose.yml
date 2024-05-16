@@ -2,19 +2,39 @@ services:
   frontend:
     image: frontend
     ports:
-      - "8080:80"
+      - "4200:80"
     build: 
       context: ./frontend
       dockerfile: Dockerfile
-    # depends_on:
-      # - backend
-  # backend:
-  #   image: backend
-  #   build: 
-  #     context: ./backend
-  #     dockerfile: Dockerfile
-  #   ports: 
-  #     - "8080:8080"
+    depends_on:
+      - backend
+  backend:
+    image: backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports: 
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://shorterUrlDb:3306/shorter_url
+      DB_USER: root
+      DB_PASSWORD: 1234
+    restart: always
+    depends_on: 
+      - shorterUrlDb
+  shorterUrlDb:
+    image: mysql:8.0.36
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_PASSWORD: 1234
+      MYSQL_DATABASE: shorter_url
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
         
 
   # backend:

@@ -1,18 +1,16 @@
 package com.shorter.url.api.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "urls")
 public class UrlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String urlId;
 
     @Column(name = "shorted_url")
@@ -30,14 +28,6 @@ public class UrlEntity {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getIdUrl() {
-        return urlId;
-    }
-
-    public void setIdUrl(String idUrl) {
-        this.urlId = idUrl;
     }
 
     public String getShortedUrl() {
@@ -70,6 +60,14 @@ public class UrlEntity {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getUrlId() {
+        return urlId;
+    }
+
+    public void setUrlId(String urlId) {
+        this.urlId = urlId;
     }
 }
 
