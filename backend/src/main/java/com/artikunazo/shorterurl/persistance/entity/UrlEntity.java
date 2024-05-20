@@ -1,4 +1,4 @@
-package com.shorter.url.api.persistence.entity;
+package com.artikunazo.shorterurl.persistance.entity;
 
 import jakarta.persistence.*;
 
@@ -19,7 +19,7 @@ public class UrlEntity {
     @Column(name = "original_url")
     private String originalUrl;
 
-    private Timestamp date;
+    private String date;
     private String user;
 
     public Integer getId() {
@@ -46,11 +46,11 @@ public class UrlEntity {
         this.originalUrl = originalUrl;
     }
 
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

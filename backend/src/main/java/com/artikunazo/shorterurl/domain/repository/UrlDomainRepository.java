@@ -1,7 +1,6 @@
-package com.shorter.url.api.domain.repository;
+package com.artikunazo.shorterurl.domain.repository;
 
-import com.shorter.url.api.domain.UrlDomain;
-import org.springframework.stereotype.Repository;
+import com.artikunazo.shorterurl.domain.UrlDomain;
 
 import java.util.Optional;
 

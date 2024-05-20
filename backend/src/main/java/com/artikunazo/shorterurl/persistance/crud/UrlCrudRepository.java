@@ -1,12 +1,10 @@
-package com.shorter.url.api.persistence.crud;
+package com.artikunazo.shorterurl.persistance.crud;
 
-import com.shorter.url.api.persistence.entity.UrlEntity;
+import com.artikunazo.shorterurl.persistance.entity.UrlEntity;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
 public interface UrlCrudRepository extends CrudRepository<UrlEntity, Integer> {
     Optional<UrlEntity> findByShortedUrl(String shortedUrl);
     // Optional<Url> findByUserId(int userId);

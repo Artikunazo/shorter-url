@@ -7,9 +7,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     depends_on:
-      - backend
-  backend:
-    image: backend
+      - shorter-url
+  shorter-url:
+    image: shorter-url
     build: 
       context: ./backend
       dockerfile: Dockerfile

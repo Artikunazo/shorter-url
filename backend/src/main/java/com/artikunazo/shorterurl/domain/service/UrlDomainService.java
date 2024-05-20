@@ -1,7 +1,7 @@
-package com.shorter.url.api.domain.service;
+package com.artikunazo.shorterurl.domain.service;
 
-import com.shorter.url.api.domain.UrlDomain;
-import com.shorter.url.api.domain.repository.UrlDomainRepository;
+import com.artikunazo.shorterurl.domain.UrlDomain;
+import com.artikunazo.shorterurl.domain.repository.UrlDomainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,7 @@ public class UrlDomainService {
     }
 
     public UrlDomain saveShortedUrl(UrlDomain urlDomain) {
+        // Create short url
         return urlDomainRepository.saveShortedUrl(urlDomain);
     }
 

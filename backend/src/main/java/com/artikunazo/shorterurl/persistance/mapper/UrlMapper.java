@@ -1,7 +1,7 @@
-package com.shorter.url.api.persistence.mapper;
+package com.artikunazo.shorterurl.persistance.mapper;
 
-import com.shorter.url.api.domain.UrlDomain;
-import com.shorter.url.api.persistence.entity.UrlEntity;
+import com.artikunazo.shorterurl.domain.UrlDomain;
+import com.artikunazo.shorterurl.persistance.entity.UrlEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,9 +10,11 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface UrlMapper {
     @Mappings({
-            @Mapping(source = "urlId", target = "urlId"),
             @Mapping(source = "shortedUrl", target = "shortedUrl"),
-            @Mapping(source = "originalUrl", target = "originalUrl")
+            @Mapping(source = "originalUrl", target = "originalUrl"),
+        @Mapping(source = "date", target = "date"),
+        @Mapping(source = "urlId", target = "urlId"),
+
     })
     UrlDomain toUrlEntity(UrlEntity url);
 
@@ -20,7 +22,7 @@ public interface UrlMapper {
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "user", ignore = true),
-            @Mapping(target = "date", ignore = true)
+
     })
     UrlEntity toUrlDomain(UrlDomain url);
 }

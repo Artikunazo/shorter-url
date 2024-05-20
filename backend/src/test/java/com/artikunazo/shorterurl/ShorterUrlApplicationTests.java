@@ -1,10 +1,10 @@
-package com.shorter.url.api;
+package com.artikunazo.shorterurl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiApplicationTests {
+class ShorterUrlApplicationTests {
 
 	@Test
 	void contextLoads() {

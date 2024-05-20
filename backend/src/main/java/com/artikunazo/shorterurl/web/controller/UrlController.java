@@ -1,13 +1,11 @@
-package com.shorter.url.api.web.controller;
+package com.artikunazo.shorterurl.web.controller;
 
-import com.shorter.url.api.domain.UrlDomain;
-import com.shorter.url.api.domain.service.UrlDomainService;
+import com.artikunazo.shorterurl.domain.UrlDomain;
+import com.artikunazo.shorterurl.domain.service.UrlDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/url")
@@ -16,6 +14,11 @@ public class UrlController {
     @Autowired
     private UrlDomainService urlDomainService;
 
+    @GetMapping
+    public ResponseEntity<String> getResponse() {
+        return new ResponseEntity<String>("Ok!", HttpStatus.OK) ;
+    }
+
     @GetMapping("/{urlShortedId}")
     public ResponseEntity<UrlDomain> getShortedUrlById(@PathVariable("urlShortedId") int id){
         return urlDomainService.getShortedUrlById(id).map(urlDomain -> new ResponseEntity<>(urlDomain, HttpStatus.OK))
@@ -23,7 +26,7 @@ public class UrlController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<UrlDomain> saveShortedUrl(UrlDomain url) {
+    public ResponseEntity<UrlDomain> saveShortedUrl(@RequestBody UrlDomain url) {
         return new ResponseEntity<>(urlDomainService.saveShortedUrl(url), HttpStatus.OK);
     }
 
@@ -33,5 +36,7 @@ public class UrlController {
                 .map(urlDomain -> new ResponseEntity<>(urlDomain, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+
 
 }

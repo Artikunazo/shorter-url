@@ -24,11 +24,12 @@ USE `urls` ;
 DROP TABLE IF EXISTS `urls`.`urls` ;
 
 CREATE TABLE IF NOT EXISTS `urls`.`urls` (
-  `id` BIGINT NOT NULL,
+  `id` INT NOT NULL,
   `shorted_url` TEXT NOT NULL,
   `original_url` TEXT NOT NULL,
   `date` TIMESTAMP NOT NULL,
-  `user` LONGTEXT NOT NULL,
+  `user` TEXT NOT NULL,
+  `url_id` TEXT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
