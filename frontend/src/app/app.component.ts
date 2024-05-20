@@ -2,12 +2,17 @@ import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {FormUrlComponent} from './form-url/form-url.component';
 import {UrlGeneratedComponent} from './url-generated/url-generated.component';
-import {MaterialModule} from './material/material.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet, FormUrlComponent, UrlGeneratedComponent],
+	imports: [
+		RouterOutlet,
+		FormUrlComponent,
+		UrlGeneratedComponent,
+		HttpClientModule,
+	],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss',
 })
