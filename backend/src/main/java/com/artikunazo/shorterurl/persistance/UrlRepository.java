@@ -27,12 +27,6 @@ public class UrlRepository implements UrlDomainRepository {
             .map(urlEntity -> urlMapper.toUrlEntity(urlEntity));
     }
 
-    @Override
-    public Optional<UrlDomain> findById(int id) {
-        return urlCrudRepository.findById(id)
-            .map(urlEntity -> urlMapper.toUrlEntity(urlEntity));
-    }
-
     public UrlDomain saveShortedUrl(UrlDomain urlDomain) {
         UrlEntity url = urlMapper.toUrlDomain(urlDomain);
         return urlMapper.toUrlEntity(urlCrudRepository.save(url));

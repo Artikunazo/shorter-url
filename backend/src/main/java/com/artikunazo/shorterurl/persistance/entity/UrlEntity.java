@@ -11,8 +11,6 @@ public class UrlEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String urlId;
-
     @Column(name = "shorted_url")
     private String shortedUrl;
 
@@ -60,14 +58,6 @@ public class UrlEntity {
 
     public void setUser(String user) {
         this.user = user;
-    }
-
-    public String getUrlId() {
-        return urlId;
-    }
-
-    public void setUrlId(String urlId) {
-        this.urlId = urlId;
     }
 }
 

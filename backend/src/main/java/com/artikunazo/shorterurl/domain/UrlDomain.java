@@ -1,18 +1,10 @@
 package com.artikunazo.shorterurl.domain;
 
 public class UrlDomain {
-    private String urlId;
     private String date;
     private String shortedUrl;
     private String originalUrl;
-
-    public String getUrlId() {
-        return urlId;
-    }
-
-    public void setUrlId(String urlId) {
-        this.urlId = urlId;
-    }
+    private String user;
 
     public String getShortedUrl() {
         return shortedUrl;
@@ -36,5 +28,13 @@ public class UrlDomain {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

@@ -19,19 +19,13 @@ public class UrlController {
         return new ResponseEntity<String>("Ok!", HttpStatus.OK) ;
     }
 
-    @GetMapping("/{urlShortedId}")
-    public ResponseEntity<UrlDomain> getShortedUrlById(@PathVariable("urlShortedId") int id){
-        return urlDomainService.getShortedUrlById(id).map(urlDomain -> new ResponseEntity<>(urlDomain, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
     @PostMapping("/save")
     public ResponseEntity<UrlDomain> saveShortedUrl(@RequestBody UrlDomain url) {
         return new ResponseEntity<>(urlDomainService.saveShortedUrl(url), HttpStatus.OK);
     }
 
-    @GetMapping("/{shortedUrl}")
-    public ResponseEntity<UrlDomain> findByShortedUrl(@PathVariable("shortedUrl") String shortedUrl){
+    @GetMapping("/{urlShortedId}")
+    public ResponseEntity<UrlDomain> findByShortedUrl(@PathVariable("urlShortedId") String shortedUrl){
         return urlDomainService.findByShortedUrl(shortedUrl)
                 .map(urlDomain -> new ResponseEntity<>(urlDomain, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

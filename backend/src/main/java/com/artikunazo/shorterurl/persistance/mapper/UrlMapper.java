@@ -10,19 +10,17 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface UrlMapper {
     @Mappings({
-            @Mapping(source = "shortedUrl", target = "shortedUrl"),
-            @Mapping(source = "originalUrl", target = "originalUrl"),
+        @Mapping(source = "shortedUrl", target = "shortedUrl"),
+        @Mapping(source = "originalUrl", target = "originalUrl"),
         @Mapping(source = "date", target = "date"),
-        @Mapping(source = "urlId", target = "urlId"),
+        @Mapping(source = "user", target = "user"),
 
     })
     UrlDomain toUrlEntity(UrlEntity url);
 
     @InheritInverseConfiguration
     @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "user", ignore = true),
-
+        @Mapping(target = "id", ignore = true),
     })
     UrlEntity toUrlDomain(UrlDomain url);
 }
