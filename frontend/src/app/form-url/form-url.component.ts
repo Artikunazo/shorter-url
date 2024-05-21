@@ -20,10 +20,16 @@ export class FormUrlComponent {
 	});
 
 	shortUrl() {
+		const _navigator: any = {};
+
+		for (let item in window.navigator) {
+			_navigator[item] = (navigator as any)[item];
+		}
+
 		const data: UrlData = {
 			originalUrl: this.formUrl.value.url ?? '',
 			date: new Date(),
-			user: btoa(JSON.stringify(navigator)),
+			user: btoa(JSON.stringify(_navigator)),
 		};
 
 		this.urlService.requestNewShortUrl(data).subscribe({

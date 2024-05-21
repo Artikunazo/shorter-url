@@ -3,5 +3,5 @@ export interface UrlData {
 	shorterUrl?: string;
 	originalUrl: string;
 	date: Date;
-	user: string;
+	user: String;
 }
