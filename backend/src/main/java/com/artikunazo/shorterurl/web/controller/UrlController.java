@@ -14,23 +14,20 @@ public class UrlController {
     @Autowired
     private UrlDomainService urlDomainService;
 
-    @GetMapping
+    @GetMapping("/health-check")
     public ResponseEntity<String> getResponse() {
         return new ResponseEntity<String>("Ok!", HttpStatus.OK) ;
+    }
+
+    @GetMapping("/{urlShortedId}")
+    public ResponseEntity<UrlDomain> findByShortedUrl(@PathVariable("urlShortedId") String shortedUrl){
+        return urlDomainService.findByShortedUrl(shortedUrl)
+            .map(urlDomain -> new ResponseEntity<>(urlDomain, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/save")
     public ResponseEntity<UrlDomain> saveShortedUrl(@RequestBody UrlDomain url) {
         return new ResponseEntity<>(urlDomainService.saveShortedUrl(url), HttpStatus.OK);
     }
-
-    @GetMapping("/{urlShortedId}")
-    public ResponseEntity<UrlDomain> findByShortedUrl(@PathVariable("urlShortedId") String shortedUrl){
-        return urlDomainService.findByShortedUrl(shortedUrl)
-                .map(urlDomain -> new ResponseEntity<>(urlDomain, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-
-
 }
