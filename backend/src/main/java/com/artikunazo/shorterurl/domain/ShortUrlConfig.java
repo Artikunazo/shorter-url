@@ -8,9 +8,9 @@ public class ShortUrlConfig {
   private Boolean hasMayus;
   private Boolean hasNumbers;
 
-  private char[] alphabet = "abcdefghijklmnopqrstuvwxy".toCharArray();
-  private Random rand = new Random();
-  private int randomLimit = 1000;
+  private final char[] alphabet = "abcdefghijklmnopqrstuvwxy".toCharArray();
+  private final Random rand = new Random();
+  private final int randomLimit = 1000;
 
   public Boolean getHasMinus() {
     return hasMinus;
@@ -40,7 +40,7 @@ public class ShortUrlConfig {
     String shortUrlId = "";
 
     if(this.hasMayus) {
-      char[] alphabetMayus = new String(this.alphabet).toString().toCharArray();
+      final char[] alphabetMayus = new String(this.alphabet).toUpperCase().toCharArray();
 
       shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
       shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
