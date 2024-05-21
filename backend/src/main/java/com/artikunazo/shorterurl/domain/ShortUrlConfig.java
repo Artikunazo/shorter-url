@@ -9,7 +9,6 @@ public class ShortUrlConfig {
   private Boolean hasNumbers;
 
   private char[] alphabet = "abcdefghijklmnopqrstuvwxy".toCharArray();
-  private char[] alphabetMayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
   private Random rand = new Random();
   private int randomLimit = 1000;
 
@@ -41,9 +40,11 @@ public class ShortUrlConfig {
     String shortUrlId = "";
 
     if(this.hasMayus) {
-      shortUrlId += this.alphabetMayus[this.rand.nextInt(this.alphabetMayus.length)];
-      shortUrlId += this.alphabetMayus[this.rand.nextInt(this.alphabetMayus.length)];
-      shortUrlId += this.alphabetMayus[this.rand.nextInt(this.alphabetMayus.length)];
+      char[] alphabetMayus = new String(this.alphabet).toString().toCharArray();
+
+      shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
+      shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
+      shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
     }
 
     if(this.hasMinus)  {
