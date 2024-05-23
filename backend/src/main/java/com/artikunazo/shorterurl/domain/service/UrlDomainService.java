@@ -10,27 +10,42 @@ import java.util.Optional;
 
 @Service
 public class UrlDomainService {
-    @Autowired
-    private UrlDomainRepository urlDomainRepository;
+  @Autowired
+  private UrlDomainRepository urlDomainRepository;
 
-    private ShortUrlConfig shortUrlConfig = new ShortUrlConfig();
+  private ShortUrlConfig shortUrlConfig = new ShortUrlConfig();
 
-    public UrlDomain saveShortedUrl(UrlDomain urlDomain) {
-        System.out.println(urlDomain.toString());
-        urlDomain.setShortedUrl(this.urlIdGenerator());
+  public UrlDomain saveShortedUrl(UrlDomain urlDomain) {
+    String urlShorted = "https://new.domain/";
 
-        return urlDomainRepository.saveShortedUrl(urlDomain);
+    Boolean isShortedUrlFound = false;
+    String urlGenerated = "";
+
+    while(!isShortedUrlFound) {
+      urlGenerated = this.urlIdGenerator();
+      isShortedUrlFound = !this.findShortedUrl(urlGenerated);
+      // Until url is not founded it generate new code
     }
 
-    public Optional<UrlDomain> findByShortedUrl(String shortedUrl) {
-        return urlDomainRepository.findByShortedUrl(shortedUrl);
-    }
+    urlDomain.setShortedUrl(urlShorted + urlGenerated);
 
-    private String urlIdGenerator() {
-        shortUrlConfig.setHasMayus(true);
-        shortUrlConfig.setHasMinus(true);
-        shortUrlConfig.setHasNumbers(true);
+    return urlDomainRepository.saveShortedUrl(urlDomain);
+  }
 
-        return shortUrlConfig.shortUrlGenerator();
-    }
+  public Optional<UrlDomain> findByShortedUrl(String shortedUrl) {
+    return urlDomainRepository.findByShortedUrl(shortedUrl);
+  }
+
+  private String urlIdGenerator() {
+    shortUrlConfig.setHasMayus(true);
+    shortUrlConfig.setHasMinus(true);
+    shortUrlConfig.setHasNumbers(true);
+
+    return shortUrlConfig.shortUrlGenerator();
+  }
+
+  public Boolean findShortedUrl(String shortedUrl) {
+    return urlDomainRepository.findByShortedUrl(shortedUrl).isPresent();
+  }
+
 }
