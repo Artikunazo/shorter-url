@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit, inject} from '@angular/core';
-import {MaterialModule} from '../material/material.module';
-import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../store';
+import {Subscription} from 'rxjs';
+import {MaterialModule} from '../material/material.module';
 import {UrlData} from '../models/urlData.model';
+import * as fromStore from '../store';
 
 @Component({
 	selector: 'url-generated',
