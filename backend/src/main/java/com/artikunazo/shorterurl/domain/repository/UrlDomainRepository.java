@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface UrlDomainRepository {
     UrlDomain saveShortedUrl(UrlDomain urlDomain);
     Optional<UrlDomain> findByShortedUrl(String shortedUrl);
+    Optional<UrlDomain> findByOriginalUrl(String originalUrl);
 }

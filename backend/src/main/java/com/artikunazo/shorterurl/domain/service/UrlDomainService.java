@@ -15,13 +15,19 @@ public class UrlDomainService {
 
   private ShortUrlConfig shortUrlConfig = new ShortUrlConfig();
 
-  public UrlDomain saveShortedUrl(UrlDomain urlDomain) {
+  public Optional<UrlDomain> saveShortedUrl(UrlDomain urlDomain) {
+    Optional<UrlDomain> urlDomainOriginal = this.findOriginalUrl(urlDomain.getOriginalUrl());
+
+    if(!urlDomainOriginal.isEmpty()) {
+      return urlDomainOriginal;
+    }
+
     String urlShorted = "https://new.domain/";
 
     Boolean isShortedUrlFound = false;
     String urlGenerated = "";
 
-    while(!isShortedUrlFound) {
+    while (!isShortedUrlFound) {
       urlGenerated = this.urlIdGenerator();
       isShortedUrlFound = !this.findShortedUrl(urlGenerated);
       // Until url is not founded it generate new code
@@ -29,7 +35,7 @@ public class UrlDomainService {
 
     urlDomain.setShortedUrl(urlShorted + urlGenerated);
 
-    return urlDomainRepository.saveShortedUrl(urlDomain);
+    return Optional.ofNullable(urlDomainRepository.saveShortedUrl(urlDomain));
   }
 
   public Optional<UrlDomain> findByShortedUrl(String shortedUrl) {
@@ -44,8 +50,12 @@ public class UrlDomainService {
     return shortUrlConfig.shortUrlGenerator();
   }
 
-  public Boolean findShortedUrl(String shortedUrl) {
+  private Boolean findShortedUrl(String shortedUrl) {
     return urlDomainRepository.findByShortedUrl(shortedUrl).isPresent();
+  }
+
+  private Optional<UrlDomain> findOriginalUrl(String originalUrl) {
+    return urlDomainRepository.findByOriginalUrl(originalUrl);
   }
 
 }

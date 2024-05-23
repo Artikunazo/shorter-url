@@ -36,4 +36,9 @@ public class UrlRepository implements UrlDomainRepository {
         return urlCrudRepository.findByShortedUrl(shortedUrl)
             .map(url -> urlMapper.toUrlEntity(url));
     }
+
+    public Optional<UrlDomain> findByOriginalUrl(String originalUrl) {
+      return urlCrudRepository.findByOriginalUrl(originalUrl)
+          .map(url -> urlMapper.toUrlEntity(url));
+    }
 }

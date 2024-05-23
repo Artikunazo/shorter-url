@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/url")
@@ -28,7 +30,7 @@ public class UrlController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<UrlDomain> saveShortedUrl(@RequestBody UrlDomain url) {
-        return new ResponseEntity<>(urlDomainService.saveShortedUrl(url), HttpStatus.OK);
+    public ResponseEntity<Optional<UrlDomain>> saveShortedUrl(@RequestBody UrlDomain url) {
+        return new ResponseEntity<Optional<UrlDomain>>(urlDomainService.saveShortedUrl(url), HttpStatus.OK);
     }
 }
