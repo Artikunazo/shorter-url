@@ -10,7 +10,7 @@ export enum ShorterActionTypes {
 export class ShorterUrl implements Action {
 	readonly type = ShorterActionTypes.SHORTER_URL;
 
-	constructor(public payload: any) {}
+	constructor(public payload: UrlData) {}
 }
 
 export class ShorterUrlSuccess implements Action {

@@ -4,6 +4,9 @@ import {ReactiveFormsModule, FormBuilder, Validators} from '@angular/forms';
 import {UrlsService} from '../api/urls.service';
 import {UrlData} from '../models/urlData.model';
 
+import * as fromStore from '../store';
+import {Store} from '@ngrx/store';
+
 @Component({
 	selector: 'form-url',
 	standalone: true,
@@ -14,6 +17,7 @@ import {UrlData} from '../models/urlData.model';
 export class FormUrlComponent {
 	protected readonly formBuilder = inject(FormBuilder);
 	protected readonly urlService = inject(UrlsService);
+	protected readonly store = inject(Store);
 
 	protected readonly formUrl = this.formBuilder.group({
 		url: this.formBuilder.control('', [Validators.required]),
@@ -30,12 +34,9 @@ export class FormUrlComponent {
 			originalUrl: this.formUrl.value.url ?? '',
 			date: new Date(),
 			user: btoa(JSON.stringify(_navigator)),
+			shortedUrl: '',
 		};
 
-		this.urlService.requestNewShortUrl(data).subscribe({
-			next: (response: any) => {
-				console.log(response);
-			},
-		});
+		this.store.dispatch(new fromStore.ShorterUrl(data));
 	}
 }

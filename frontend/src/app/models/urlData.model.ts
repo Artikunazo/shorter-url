@@ -1,7 +1,7 @@
 export interface UrlData {
 	id?: number;
-	shorterUrl?: string;
+	shortedUrl: string;
 	originalUrl: string;
-	date: Date;
-	user: String;
+	date?: Date;
+	user: string;
 }

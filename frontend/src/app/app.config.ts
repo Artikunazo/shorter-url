@@ -6,15 +6,16 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
 import {provideEffects} from '@ngrx/effects';
 import {provideStore, provideState} from '@ngrx/store';
 import * as fromShorterReducer from './store/reducers/shorter_reducer';
-import {MaterialModule} from './material/material.module';
 import {provideHttpClient} from '@angular/common/http';
+
+import {effects} from './store';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
 		provideRouter(routes),
 		provideAnimationsAsync(),
 		provideAnimationsAsync(),
-		provideEffects(),
+		provideEffects(effects),
 		provideStore(),
 		provideState({name: 'shorter', reducer: fromShorterReducer.reducer}),
 		provideAnimationsAsync(),
