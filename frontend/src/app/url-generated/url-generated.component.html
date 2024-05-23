@@ -3,7 +3,12 @@
 		><div class="url-generated-content">
 			<p>{{ urlData.shortedUrl }}</p>
 			<mat-divider [vertical]="true"></mat-divider>
-			<mat-icon inline="true">content_copy</mat-icon>
+			<mat-icon
+				inline="true"
+				[clipboard]="urlData.shortedUrl"
+			>
+				content_copy
+			</mat-icon>
 		</div></mat-card-content
 	>
 </mat-card>

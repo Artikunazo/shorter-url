@@ -20,6 +20,10 @@
 			font-size: 20px;
 			display: flex;
 			align-self: center;
+
+			&:hover {
+				cursor: pointer;
+			}
 		}
 	}
 }
