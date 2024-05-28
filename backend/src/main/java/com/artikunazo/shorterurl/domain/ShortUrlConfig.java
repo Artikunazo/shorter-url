@@ -1,6 +1,5 @@
 package com.artikunazo.shorterurl.domain;
 
-import java.util.List;
 import java.util.Random;
 
 public class ShortUrlConfig {
@@ -40,7 +39,9 @@ public class ShortUrlConfig {
     String shortUrlId = "";
 
     if(this.hasMayus) {
-      final char[] alphabetMayus = new String(this.alphabet).toUpperCase().toCharArray();
+      final char[] alphabetMayus = new String(this.alphabet)
+        .toUpperCase()
+        .toCharArray();
 
       shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
       shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
