@@ -1,7 +1,7 @@
 package com.artikunazo.shorterurl.persistance.entity;
 
 import jakarta.persistence.*;
-
+import lombok.*;
 import java.sql.Timestamp;
 
 @Data
