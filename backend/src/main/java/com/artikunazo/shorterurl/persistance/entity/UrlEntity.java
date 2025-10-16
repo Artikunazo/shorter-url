@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "urls")
-@DynamicUpdate
 public class UrlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
