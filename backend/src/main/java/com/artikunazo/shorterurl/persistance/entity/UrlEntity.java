@@ -18,7 +18,7 @@ public class UrlEntity {
     private String originalUrl;
 
     private String date;
-    private String app_user;
+    private String user;
 
     public Integer getId() {
         return id;
@@ -53,11 +53,11 @@ public class UrlEntity {
     }
 
     public String getUser() {
-        return this.app_user;
+        return this.user;
     }
 
     public void setUser(String user) {
-        this.app_user = user;
+        this.user = user;
     }
 }
 
