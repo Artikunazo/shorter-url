@@ -16,26 +16,27 @@ services:
     ports: 
       - "8080:8080"
     environment:
-      DB_URL: jdbc:mysql://shorterUrlDb:3306/shorter_url
-      DB_USER: root
-      DB_PASSWORD: 1234
+      DB_URL: jdbc:postgresql://shorterUrlDb:5432/${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
     restart: always
     depends_on: 
       - shorterUrlDb
   shorterUrlDb:
-    image: mysql:8.0.36
+    image: postgres:15-alpine
     ports:
-      - "3307:3306"
+      - "5433:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_PASSWORD: 1234
-      MYSQL_DATABASE: shorter_url
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${BD_USER}
+      POSTGRES_DATABASE: ${DB_NAME}
     restart: always
+    volumnes:
+      - ./backend/db.sql:/docker-entrypoint-initdb.d/db.sql
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 10s
       retries: 5
-        
-
-  # backend:
-  # shortUrlDb:
+volumnes:
+  postgres_data:
