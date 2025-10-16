@@ -53,11 +53,11 @@ public class UrlEntity {
     }
 
     public String getUser() {
-        return user;
+        return this.user;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUser(String appUser) {
+        this.user = appUser;
     }
 }
 
