@@ -27,7 +27,7 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY --from=build /home/gradle/src/build/libs/*.jar dashboardKanban-1.0.jar
+COPY --from=build /home/gradle/src/build/libs/*.jar shorter-url-1.0.jar
 
 # ADD build/libs/dashboardKanban-1.0.jar dashboardKanban-1.0.jar
 ADD db.sql /docker-entrypoint-initdb.d
