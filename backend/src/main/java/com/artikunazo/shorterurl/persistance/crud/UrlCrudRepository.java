@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-@Transactional
 public interface UrlCrudRepository extends CrudRepository<UrlEntity, Integer> {
     Optional<UrlEntity> findByShortedUrl(String shortedUrl);
     // Optional<Url> findByUserId(int userId);
