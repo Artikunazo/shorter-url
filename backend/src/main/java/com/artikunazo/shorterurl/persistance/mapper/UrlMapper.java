@@ -13,7 +13,7 @@ public interface UrlMapper {
         @Mapping(source = "shortedUrl", target = "shortedUrl"),
         @Mapping(source = "originalUrl", target = "originalUrl"),
         @Mapping(source = "date", target = "date"),
-        @Mapping(source = "user", target = "user"),
+        @Mapping(source = "app_user", target = "user"),
 
     })
     UrlDomain toUrlEntity(UrlEntity url);

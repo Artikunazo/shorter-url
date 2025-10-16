@@ -31,7 +31,7 @@ public class UrlDomain {
     }
 
     public String getUser() {
-        return user;
+        return this.user;
     }
 
     public void setUser(String user) {
