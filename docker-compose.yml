@@ -16,7 +16,7 @@ services:
     ports: 
       - "8080:8080"
     environment:
-      DB_URL: jdbc:postgresql://shorterUrlDb:5432/${DB_NAME}
+      DB_URL: jdbc:postgresql://shorterUrlDb:5432/${DB_NAME}?stringtype=unspecified
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
     restart: always
@@ -31,12 +31,12 @@ services:
       POSTGRES_USER: ${BD_USER}
       POSTGRES_DATABASE: ${DB_NAME}
     restart: always
-    volumnes:
+    volumes:
       - ./backend/db.sql:/docker-entrypoint-initdb.d/db.sql
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 10s
       retries: 5
-volumnes:
+volumes:
   postgres_data:

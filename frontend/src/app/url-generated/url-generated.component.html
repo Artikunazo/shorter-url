@@ -1,14 +1,14 @@
-<mat-card class="url-generated-container">
-	<mat-card-content
-		><div class="url-generated-content">
-			<p>{{ urlData.shortedUrl }}</p>
-			<mat-divider [vertical]="true"></mat-divider>
-			<mat-icon
-				inline="true"
-				[clipboard]="urlData.shortedUrl"
-			>
-				content_copy
-			</mat-icon>
-		</div></mat-card-content
-	>
-</mat-card>
+<p-card styleClass="w-full text-center">
+	<div class="flex flex-row items-center justify-center gap-4">
+		<p class="text-xl font-medium m-0">{{ urlData().shortedUrl }}</p>
+		<p-divider layout="vertical"></p-divider>
+		<p-button 
+			icon="pi pi-copy" 
+			[clipboard]="urlData().shortedUrl" 
+			[rounded]="true" 
+			[text]="true"
+			ariaLabel="Copy to clipboard"
+			styleClass="py-2 px-3"
+		></p-button>
+	</div>
+</p-card>

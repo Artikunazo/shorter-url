@@ -1,20 +1,20 @@
-<section class="container">
-	<div class="row">
-		<h1 class="col">{{ title }}</h1>
+<section class="flex flex-col items-center justify-center min-h-screen p-8 box-border">
+	<div class="flex w-full justify-center mb-8">
+		<!-- <h1 class="font-light text-4xl tracking-tight text-center drop-shadow-md">{{ title }}</h1> -->
 	</div>
-	<div class="row justify-content-center">
-		<form-url class="col" />
+	<div class="flex w-full justify-center max-w-2xl mb-8">
+		<form-url class="w-full" />
 	</div>
 
-	<div class="row justify-content-center app-container">
-		@if (isLoading) {
-			<mat-spinner
-				[diameter]="45"
-				class="col justify-self-center"
+	<div class="flex w-full justify-center max-w-2xl mt-8">
+		@if (isLoading()) {
+			<p-progressSpinner
+				strokeWidth="4"
+				class="mx-auto my-8"
 			/>
 		}
-		@if (isUrlShorted) {
-			<url-generated class="col justify-self-center" />
+		@if (isUrlShorted()) {
+			<url-generated class="w-full mx-auto" />
 		}
 	</div>
 </section>

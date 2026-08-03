@@ -1,48 +1,62 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-// Plus imports for other components in your app.
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$url-shorter-primary: mat.define-palette(mat.$indigo-palette);
-$url-shorter-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$url-shorter-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$url-shorter-theme: mat.define-light-theme(
-	(
-		color: (
-			primary: $url-shorter-primary,
-			accent: $url-shorter-accent,
-			warn: $url-shorter-warn,
-		),
-		typography: mat.define-typography-config(),
-		density: 0,
-	)
-);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($url-shorter-theme);
-
-/* You can add global styles to this file, and also import other style files */
-
-html,
-body {
-	height: 100%;
+/* PrimeNG Theme Overrides for Plasma 6 Aesthetics */
+:root {
+	--primary-color: #3daee9;
+	--primary-color-text: #ffffff;
 }
+
 body {
-	margin: 0;
-	font-family: Roboto, 'Helvetica Neue', sans-serif;
+	@apply bg-plasma-bg text-plasma-text min-h-screen m-0 font-sans;
+	background-image: radial-gradient(circle at top right, #2a2e32, #232629);
+}
+
+/* Glassmorphism for containers (PrimeNG Cards) */
+.p-card {
+	@apply bg-plasma-panel border border-plasma-border rounded-plasma shadow-plasma text-plasma-text;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+
+.p-card .p-card-body {
+	@apply p-6;
+}
+
+/* PrimeNG Button Styling */
+.p-button {
+	@apply bg-plasma-accent text-white border-0 rounded-plasma shadow-plasma transition-colors duration-200;
+}
+
+.p-button:enabled:hover {
+	@apply bg-plasma-accent-hover;
+}
+
+.p-button:disabled {
+	@apply opacity-50 cursor-not-allowed;
+}
+
+/* PrimeNG Input Field Styling */
+.p-inputtext {
+	@apply bg-[#232629]/50 border border-plasma-border rounded-plasma text-plasma-text p-3 w-full transition-colors duration-200;
+}
+
+.p-inputtext:enabled:focus {
+	@apply border-plasma-accent outline-none ring-0;
+}
+
+/* Fix floating labels if used */
+.p-float-label label {
+	@apply text-gray-400;
+}
+
+.p-float-label input:focus ~ label,
+.p-float-label input.p-filled ~ label {
+	@apply text-plasma-accent;
+}
+
+/* Spinner */
+.p-progress-spinner-circle {
+	stroke: var(--primary-color) !important;
 }

@@ -1,35 +1,19 @@
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs';
 import {ClipboardDirective} from '../common/clipboard.directive';
-import {MaterialModule} from '../material/material.module';
-import {UrlData} from '../models/urlData.model';
+import {CardModule} from 'primeng/card';
+import {DividerModule} from 'primeng/divider';
+import {ButtonModule} from 'primeng/button';
 import * as fromStore from '../store';
 
 @Component({
 	selector: 'url-generated',
 	standalone: true,
-	imports: [MaterialModule, ClipboardDirective],
+	imports: [CardModule, DividerModule, ButtonModule, ClipboardDirective],
 	templateUrl: './url-generated.component.html',
 	styleUrl: './url-generated.component.scss',
 })
-export class UrlGeneratedComponent implements OnInit, OnDestroy {
+export class UrlGeneratedComponent {
 	protected readonly store = inject(Store);
-
-	protected readonly subscription = new Subscription();
-	protected urlData!: UrlData;
-
-	ngOnInit(): void {
-		this.subscription.add(
-			this.store.select(fromStore.getUrlData).subscribe({
-				next: (response: UrlData) => {
-					this.urlData = response;
-				},
-			}),
-		);
-	}
-
-	ngOnDestroy(): void {
-		this.subscription.unsubscribe();
-	}
+	protected readonly urlData = this.store.selectSignal(fromStore.getUrlData);
 }

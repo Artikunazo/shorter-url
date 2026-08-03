@@ -1,5 +1,7 @@
 import {Component, inject} from '@angular/core';
-import {MaterialModule} from '../material/material.module';
+import {CardModule} from 'primeng/card';
+import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
 import {ReactiveFormsModule, FormBuilder, Validators} from '@angular/forms';
 import {UrlsService} from '../api/urls.service';
 import {UrlData} from '../models/urlData.model';
@@ -10,7 +12,7 @@ import {Store} from '@ngrx/store';
 @Component({
 	selector: 'form-url',
 	standalone: true,
-	imports: [MaterialModule, ReactiveFormsModule],
+	imports: [CardModule, InputTextModule, ButtonModule, ReactiveFormsModule],
 	templateUrl: './form-url.component.html',
 	styleUrl: './form-url.component.scss',
 })

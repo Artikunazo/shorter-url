@@ -1,16 +1,13 @@
-<section>
-	<form [formGroup]="formUrl" class="row">
-		<mat-form-field class="col" appareance="outline">
-			<mat-label>Url to short</mat-label>
-			<input matInput formControlName="url" type="text" />
-		</mat-form-field>
-		<button
-			mat-raised-button
-			color="primary"
-			(click)="shortUrl()"
-			class="col justify-self-center"
-		>
-			Short URL!
-		</button>
+<p-card styleClass="w-full">
+	<form [formGroup]="formUrl" class="flex flex-col sm:flex-row gap-4 items-center">
+		<div class="flex-1 w-full">
+			<input pInputText formControlName="url" type="url" placeholder="https://example.com" class="w-full" />
+		</div>
+		<p-button
+			label="Shorten URL"
+			(onClick)="shortUrl()"
+			[disabled]="formUrl.invalid"
+			styleClass="w-full sm:w-auto p-3"
+		></p-button>
 	</form>
-</section>
+</p-card>

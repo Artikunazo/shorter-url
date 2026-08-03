@@ -25,9 +25,8 @@
 						"inlineStyleLanguage": "scss",
 						"assets": ["src/favicon.ico", "src/assets"],
 						"styles": [
-							"@angular/material/prebuilt-themes/indigo-pink.css",
-							"src/styles.scss",
-							"./node_modules/gary-css/gary.min.css"
+							"node_modules/primeicons/primeicons.css",
+							"src/styles.scss"
 						],
 						"scripts": []
 					},
@@ -87,7 +86,7 @@
 						"inlineStyleLanguage": "scss",
 						"assets": ["src/favicon.ico", "src/assets"],
 						"styles": [
-							"@angular/material/prebuilt-themes/indigo-pink.css",
+							"node_modules/primeicons/primeicons.css",
 							"src/styles.scss"
 						],
 						"scripts": []

@@ -1,21 +1,24 @@
 # Get official node 20 image in alpine version
 FROM node:20-alpine AS build
 
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@9 --activate
+
 # Define workdir
 WORKDIR /app
 
-#Copy dependecy files
-COPY package.json ./
-COPY package-lock.json ./
+# Copy dependency files
+COPY package.json pnpm-lock.yaml* ./
 
 # Install all project dependencies
-RUN npm install
+RUN pnpm install
 
 # Copy all project files to container application
 COPY . .
 
 # Build the project
-RUN npm run build -- --configuration production
+# RUN pnpm run build -- --configuration production
+RUN pnpm run build
 
 # Get official nginx image
 FROM nginx:alpine

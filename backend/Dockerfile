@@ -23,7 +23,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew clean build -x test --no-daemon --stacktrace
 
 # Run build
-FROM openjdk:17-jdk-slim
+FROM amazoncorretto:17-alpine
 
 WORKDIR /app
 

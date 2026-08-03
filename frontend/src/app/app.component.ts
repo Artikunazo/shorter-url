@@ -1,9 +1,8 @@
 import {HttpClientModule} from '@angular/common/http';
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {Component, inject, computed} from '@angular/core';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {RouterOutlet} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs';
 import {FormUrlComponent} from './form-url/form-url.component';
 import {UrlGeneratedComponent} from './url-generated/url-generated.component';
 
@@ -18,40 +17,20 @@ import * as fromStore from './store';
 		FormUrlComponent,
 		UrlGeneratedComponent,
 		HttpClientModule,
-		MatProgressSpinnerModule,
+		ProgressSpinnerModule,
 	],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
 	protected readonly store = inject(Store);
-
 	protected title = 'URL Shorter';
-	protected readonly subscriptions = new Subscription();
 
-	protected isLoading = false;
-	protected isUrlShorted = false;
+	protected readonly isLoading = this.store.selectSignal(fromStore.getLoading);
+	protected readonly urlData = this.store.selectSignal(fromStore.getUrlData);
 
-	ngOnInit(): void {
-		this.subscriptions.add(
-			this.store.select(fromStore.getLoading).subscribe({
-				next: (response) => {
-					this.isLoading = response;
-				},
-			}),
-		);
-
-		this.subscriptions.add(
-			this.store.select(fromStore.getUrlData).subscribe({
-				next: (response: UrlData) => {
-					this.isUrlShorted =
-						response.shortedUrl.includes('https://new.domain');
-				},
-			}),
-		);
-	}
-
-	ngOnDestroy(): void {
-		this.subscriptions.unsubscribe();
-	}
+	protected readonly isUrlShorted = computed(() => {
+		const data = this.urlData();
+		return data && data.shortedUrl.includes('https://new.domain');
+	});
 }
