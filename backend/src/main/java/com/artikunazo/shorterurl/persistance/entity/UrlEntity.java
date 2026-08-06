@@ -18,12 +18,12 @@ public class UrlEntity {
     @Column(name = "shorted_url", nullable = false, unique = true, columnDefinition = "TEXT")
     private String shortedUrl;
 
-    @Column(name = "original_url", nullable = false)
+    @Column(name = "original_url", nullable = false, columnDefinition = "TEXT")
     private String originalUrl;
 
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "app_user", nullable = false)
+    @Column(name = "app_user", nullable = false, columnDefinition = "TEXT")
     private String user;
 }
