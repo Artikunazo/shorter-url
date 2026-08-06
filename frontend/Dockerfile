@@ -16,6 +16,8 @@ RUN pnpm install
 # Copy all project files to container application
 COPY . .
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Build the project
 # RUN pnpm run build -- --configuration production
 RUN pnpm run build
