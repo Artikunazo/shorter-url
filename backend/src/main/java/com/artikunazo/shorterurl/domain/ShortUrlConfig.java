@@ -1,64 +1,25 @@
 package com.artikunazo.shorterurl.domain;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class ShortUrlConfig {
-  private Boolean hasMinus;
-  private Boolean hasMayus;
-  private Boolean hasNumbers;
 
-  private final char[] alphabet = "abcdefghijklmnopqrstuvwxy".toCharArray();
-  private final Random rand = new Random();
-  private final int randomLimit = 1000;
-
-  public Boolean getHasMinus() {
-    return hasMinus;
-  }
-
-  public void setHasMinus(Boolean hasMinus) {
-    this.hasMinus = hasMinus;
-  }
-
-  public Boolean getHasMayus() {
-    return hasMayus;
-  }
-
-  public void setHasMayus(Boolean hasMayus) {
-    this.hasMayus = hasMayus;
-  }
-
-  public Boolean getHasNumbers() {
-    return hasNumbers;
-  }
-
-  public void setHasNumbers(Boolean hasNumbers) {
-    this.hasNumbers = hasNumbers;
-  }
+  private static final String ALPHANUMERIC_ALPHABET = 
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  private static final int DEFAULT_KEY_LENGTH = 7;
+  private final Random random = new SecureRandom();
 
   public String shortUrlGenerator() {
-    String shortUrlId = "";
-
-    if(this.hasMayus) {
-      final char[] alphabetMayus = new String(this.alphabet)
-        .toUpperCase()
-        .toCharArray();
-
-      shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
-      shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
-      shortUrlId += alphabetMayus[this.rand.nextInt(alphabetMayus.length)];
-    }
-
-    if(this.hasMinus)  {
-      shortUrlId += this.alphabet[this.rand.nextInt(this.alphabet.length)];
-      shortUrlId += this.alphabet[this.rand.nextInt(this.alphabet.length)];
-      shortUrlId += this.alphabet[this.rand.nextInt(this.alphabet.length)];
-    }
-
-    if(this.hasNumbers) {
-      shortUrlId += this.rand.nextInt(this.randomLimit) + 1;
-    }
-
-    return shortUrlId;
+    return shortUrlGenerator(DEFAULT_KEY_LENGTH);
   }
 
+  public String shortUrlGenerator(int length) {
+    StringBuilder builder = new StringBuilder(length);
+    for (int i = 0; i < length; i++) {
+      int index = random.nextInt(ALPHANUMERIC_ALPHABET.length());
+      builder.append(ALPHANUMERIC_ALPHABET.charAt(index));
+    }
+    return builder.toString();
+  }
 }

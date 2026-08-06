@@ -5,40 +5,37 @@ import com.artikunazo.shorterurl.domain.repository.UrlDomainRepository;
 import com.artikunazo.shorterurl.persistance.crud.UrlCrudRepository;
 import com.artikunazo.shorterurl.persistance.entity.UrlEntity;
 import com.artikunazo.shorterurl.persistance.mapper.UrlMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class UrlRepository implements UrlDomainRepository {
-    @Autowired
-    private UrlCrudRepository urlCrudRepository;
-
-    @Autowired
-    private UrlMapper urlMapper;
-
-    /* public List<Url> getAll() {
-        return (List<Url>) urlCrudRepository.findAll();
-    } */
+    private final UrlCrudRepository urlCrudRepository;
+    private final UrlMapper urlMapper;
 
     public Optional<UrlDomain> getShortedUrlById(int id) {
         return urlCrudRepository.findById(id)
-            .map(urlEntity -> urlMapper.toUrlEntity(urlEntity));
+            .map(urlMapper::toDomain);
     }
 
+    @Override
     public UrlDomain saveShortedUrl(UrlDomain urlDomain) {
-        UrlEntity url = urlMapper.toUrlDomain(urlDomain);
-        return urlMapper.toUrlEntity(urlCrudRepository.save(url));
+        UrlEntity url = urlMapper.toEntity(urlDomain);
+        return urlMapper.toDomain(urlCrudRepository.save(url));
     }
 
+    @Override
     public Optional<UrlDomain> findByShortedUrl(String shortedUrl) {
         return urlCrudRepository.findByShortedUrl(shortedUrl)
-            .map(url -> urlMapper.toUrlEntity(url));
+            .map(urlMapper::toDomain);
     }
 
+    @Override
     public Optional<UrlDomain> findByOriginalUrl(String originalUrl) {
-      return urlCrudRepository.findByOriginalUrl(originalUrl)
-          .map(url -> urlMapper.toUrlEntity(url));
+        return urlCrudRepository.findByOriginalUrl(originalUrl)
+            .map(urlMapper::toDomain);
     }
 }

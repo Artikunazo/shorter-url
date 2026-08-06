@@ -3,72 +3,89 @@ package com.artikunazo.shorterurl.domain.service;
 import com.artikunazo.shorterurl.domain.ShortUrlConfig;
 import com.artikunazo.shorterurl.domain.UrlDomain;
 import com.artikunazo.shorterurl.domain.repository.UrlDomainRepository;
-import com.artikunazo.shorterurl.common.UrlConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UrlDomainService {
-  @Autowired
-  private UrlDomainRepository urlDomainRepository;
 
-  private ShortUrlConfig shortUrlConfig = new ShortUrlConfig();
+  private final UrlDomainRepository urlDomainRepository;
 
-  public Optional<UrlDomain> saveShortedUrl(UrlDomain urlDomain) {
-    Optional<UrlDomain> urlDomainOriginal = this.findOriginalUrl(urlDomain.getOriginalUrl());
+  @Value("${app.shortener.base-url:http://localhost:8080/shorter-url/api/url/}")
+  private String baseUrl;
 
-    if(urlDomainOriginal.isPresent()) {
-      return urlDomainOriginal;
+  private final ShortUrlConfig shortUrlConfig = new ShortUrlConfig();
+
+  public UrlDomain saveShortedUrl(UrlDomain urlDomain) {
+    if (urlDomain.getOriginalUrl() != null) {
+      Optional<UrlDomain> existing = urlDomainRepository.findByOriginalUrl(urlDomain.getOriginalUrl());
+      if (existing.isPresent()) {
+        UrlDomain domain = existing.get();
+        domain.setShortedUrl(buildFullUrl(domain.getShortedUrl()));
+        return domain;
+      }
     }
 
-    boolean isShortedUrlFound = false;
-    String urlGenerated = "";
+    String slug = "";
+    boolean collision = true;
+    int maxAttempts = 10;
+    int attempts = 0;
 
-    while (!isShortedUrlFound) {
-      urlGenerated = this.urlIdGenerator();
-      isShortedUrlFound = !this.findShortedUrl(urlGenerated);
-      // Until url is not founded it generate new code
+    while (collision && attempts < maxAttempts) {
+      slug = shortUrlConfig.shortUrlGenerator();
+      collision = urlDomainRepository.findByShortedUrl(slug).isPresent();
+      attempts++;
     }
 
-    urlDomain.setShortedUrl(UrlConstants.NEW_DOMAIN + urlGenerated);
-
-    return Optional.ofNullable(urlDomainRepository.saveShortedUrl(urlDomain));
-  }
-
-  public Optional<UrlDomain> findByShortedUrl(String shortedUrl) {
-    return urlDomainRepository.findByShortedUrl(shortedUrl);
-  }
-
-  private String urlIdGenerator() {
-    shortUrlConfig.setHasMayus(true);
-    shortUrlConfig.setHasMinus(true);
-    shortUrlConfig.setHasNumbers(true);
-
-    return shortUrlConfig.shortUrlGenerator();
-  }
-
-  private Boolean findShortedUrl(String shortedUrl) {
-    return urlDomainRepository.findByShortedUrl(shortedUrl).isPresent();
-  }
-
-  private Optional<UrlDomain> findOriginalUrl(String originalUrl) {
-    return urlDomainRepository.findByOriginalUrl(originalUrl);
-  }
-
-  public String getOriginalUrl(Optional<UrlDomain> urlDomain) {
-    String originalUrl = UrlConstants.URL_BASE + ":" +
-        UrlConstants.PORT +
-        UrlConstants.CONTEXT_PATH +
-        "url/error";
-
-    if(urlDomain.isPresent()) {
-      originalUrl = urlDomain.get().getOriginalUrl();
+    if (collision) {
+      throw new IllegalStateException("Failed to generate a unique short URL key. Please try again.");
     }
 
-    return originalUrl;
+    urlDomain.setShortedUrl(slug);
+    if (urlDomain.getDate() == null) {
+      urlDomain.setDate(LocalDateTime.now());
+    }
+    if (urlDomain.getUser() == null || urlDomain.getUser().isBlank()) {
+      urlDomain.setUser("anonymous");
+    }
+
+    UrlDomain savedDomain = urlDomainRepository.saveShortedUrl(urlDomain);
+    savedDomain.setShortedUrl(buildFullUrl(savedDomain.getShortedUrl()));
+    return savedDomain;
   }
 
+  public Optional<UrlDomain> findByShortedUrl(String shortedUrlOrSlug) {
+    String slug = extractSlug(shortedUrlOrSlug);
+    return urlDomainRepository.findByShortedUrl(slug)
+        .map(domain -> {
+          domain.setShortedUrl(buildFullUrl(domain.getShortedUrl()));
+          return domain;
+        });
+  }
+
+  public String getOriginalUrl(String shortedUrlOrSlug) {
+    return findByShortedUrl(shortedUrlOrSlug)
+        .map(UrlDomain::getOriginalUrl)
+        .orElse(null);
+  }
+
+  private String extractSlug(String input) {
+    if (input == null) return "";
+    int lastSlash = input.lastIndexOf('/');
+    return lastSlash >= 0 ? input.substring(lastSlash + 1) : input;
+  }
+
+  private String buildFullUrl(String slug) {
+    if (slug == null) return baseUrl;
+    if (slug.startsWith("http://") || slug.startsWith("https://")) {
+      return slug;
+    }
+    String prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+    return prefix + slug;
+  }
 }

@@ -1,40 +1,20 @@
 package com.artikunazo.shorterurl.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UrlDomain {
-    private String date;
+    private Integer id;
     private String shortedUrl;
     private String originalUrl;
+    private LocalDateTime date;
     private String user;
-
-    public String getShortedUrl() {
-        return shortedUrl;
-    }
-
-    public void setShortedUrl(String shortedUrl) {
-        this.shortedUrl = shortedUrl;
-    }
-
-    public String getOriginalUrl() {
-        return originalUrl;
-    }
-
-    public void setOriginalUrl(String originalUrl) {
-        this.originalUrl = originalUrl;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getUser() {
-        return this.user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
 }
