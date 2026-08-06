@@ -10,7 +10,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
-@CrossOrigin(origins = "${app.cors.allowed-origins}", maxAge = 3600)
 @RestController
 @RequestMapping("/url")
 @RequiredArgsConstructor
