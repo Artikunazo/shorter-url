@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, catchError, map, of, debounceTime, exhaustMap} from 'rxjs';
+import {Observable, EMPTY, switchMap} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {UrlsService} from '../../api/urls.service';
@@ -17,21 +17,12 @@ export class ShortUrlEffects {
 		private readonly urlsService: UrlsService,
 	) {}
 
-	shorterUrl$: Observable<Action> = createEffect(() => {
-		return this.actions$.pipe(
-			ofType(this.shortUrlActionTypes.SHORTER_URL),
-			debounceTime(400),
-			map((data: fromShorterActions.ShorterUrl) => data.payload),
-			exhaustMap((data: UrlData) => {
-				return this.urlsService.requestNewShortUrl(data).pipe(
-					map((response: UrlData) => {
-						return new fromShorterActions.ShorterUrlSuccess(response);
-					}),
-					catchError((error: any) => {
-						return of(new fromShorterActions.ShorterUrlFail(error));
-					}),
-				);
-			}),
-		);
-	});
+	shorterUrl$: Observable<Action> = createEffect(
+		() =>
+			this.actions$.pipe(
+				ofType(this.shortUrlActionTypes.SHORTER_URL),
+				switchMap(() => EMPTY),
+			),
+		{dispatch: false},
+	);
 }

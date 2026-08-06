@@ -39,6 +39,14 @@ export class FormUrlComponent {
 			shortedUrl: '',
 		};
 
-		this.store.dispatch(new fromStore.ShorterUrl(data));
+		// Direct HTTP call bypassing NgRx Effect
+		this.urlService.requestNewShortUrl(data).subscribe({
+			next: (response: UrlData) => {
+				this.store.dispatch(new fromStore.ShorterUrlSuccess(response));
+			},
+			error: (error: any) => {
+				this.store.dispatch(new fromStore.ShorterUrlFail(error));
+			},
+		});
 	}
 }

@@ -31,6 +31,6 @@ export class AppComponent {
 
 	protected readonly isUrlShorted = computed(() => {
 		const data = this.urlData();
-		return data && data.shortedUrl.includes('https://new.domain');
+		return !!(data && data.shortedUrl);
 	});
 }
