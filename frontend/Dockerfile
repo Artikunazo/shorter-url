@@ -16,6 +16,9 @@ RUN pnpm install
 # Copy all project files to container application
 COPY . .
 
+# Build the Angular application
+RUN pnpm run build
+
 # Get official nginx image
 FROM nginx:alpine
 
