@@ -16,14 +16,11 @@ RUN pnpm install
 # Copy all project files to container application
 COPY . .
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Build the project
-# RUN pnpm run build -- --configuration production
-RUN pnpm run build
-
 # Get official nginx image
 FROM nginx:alpine
+
+# Copy custom nginx configuration for SPA routing
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the build output to nginx default html directory
 COPY --from=build /app/dist/shorter-url/browser /usr/share/nginx/html
