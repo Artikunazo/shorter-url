@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
-@CrossOrigin(origins = {"http://localhost:4200", "https://shorter-url-fe.onrender.com"}, maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:4200", "https://shorter-url-fe-staging.up.railway.app/"}, maxAge = 3600)
 @RestController
 @RequestMapping("/url")
 @RequiredArgsConstructor
