@@ -5,6 +5,7 @@ import com.artikunazo.shorterurl.domain.UrlDomain;
 import com.artikunazo.shorterurl.domain.repository.UrlDomainRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -68,6 +69,7 @@ public class UrlDomainService {
         });
   }
 
+  @Cacheable(value = "urls", key = "#shortedUrlOrSlug", unless = "#result == null")
   public String getOriginalUrl(String shortedUrlOrSlug) {
     return findByShortedUrl(shortedUrlOrSlug)
         .map(UrlDomain::getOriginalUrl)
